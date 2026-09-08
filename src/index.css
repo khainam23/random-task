@@ -1,0 +1,211 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+/* ════════════════════════════════════════
+   THEME TOKENS — đổi màu tại đây là xong
+   ════════════════════════════════════════ */
+:root {
+  /* Brand palette */
+  --c-accent:      #3b82f6;   /* blue-500  — màu chủ đạo                  */
+  --c-accent-lt:   #60a5fa;   /* blue-400  — lighter variant               */
+  --c-accent-dk:   #1d4ed8;   /* blue-700  — darker variant                */
+  --c-accent-glow: rgba(59, 130, 246, 0.40); /* shadow/glow               */
+
+  /* Background */
+  --c-bg:          #05080f;   /* deep navy-black                           */
+  --c-text:        #e8f0fe;   /* off-white with blue tint                  */
+
+  /* Gradient title */
+  --c-grad-start:  #bfdbfe;   /* blue-200                                  */
+  --c-grad-mid:    #60a5fa;   /* blue-400                                  */
+  --c-grad-end:    #2563eb;   /* blue-600                                  */
+
+  /* Three.js orb colours */
+  --c-orb-1: #1d4ed8;
+  --c-orb-2: #3b82f6;
+  --c-orb-3: #0ea5e9;
+  --c-orb-4: #6366f1;
+  --c-orb-5: #1e40af;
+
+  /* Glass surface */
+  --c-glass-bg:     rgba(255,255,255,0.035);
+  --c-glass-border: rgba(255,255,255,0.08);
+
+  /* Focus ring on inputs */
+  --c-focus-ring:  rgba(59,130,246,0.18);
+
+  /* Danger */
+  --c-danger:      rgba(248,113,113,0.65);
+  --c-danger-ring: rgba(248,113,113,0.12);
+}
+
+/* ── Base ── */
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* ── Utilities ── */
+.glass {
+  background: var(--c-glass-bg);
+  border: 1px solid var(--c-glass-border);
+  border-radius: 18px;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg,
+    var(--c-grad-start) 0%,
+    var(--c-grad-mid)   45%,
+    var(--c-grad-end)   100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Keyframes ── */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-7px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4;  transform: scale(1);    }
+  50%       { opacity: 0.85; transform: scale(1.12); }
+}
+
+@keyframes jar-shake {
+  0%   { transform: rotate(0deg)   scale(1);    }
+  15%  { transform: rotate(-14deg) scale(1.08); }
+  30%  { transform: rotate(14deg)  scale(1.09); }
+  45%  { transform: rotate(-9deg)  scale(1.06); }
+  60%  { transform: rotate(7deg)   scale(1.04); }
+  75%  { transform: rotate(-4deg)  scale(1.02); }
+  100% { transform: rotate(0deg)   scale(1);    }
+}
+
+@keyframes reveal-up {
+  from { opacity: 0; transform: translateY(28px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+@keyframes sparkle {
+  from { transform: rotate(-20deg) scale(0.3); opacity: 0; }
+  to   { transform: rotate(0deg)   scale(1);   opacity: 1; }
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0);     }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes btn-glow {
+  0%, 100% { box-shadow: 0 4px 24px var(--c-accent-glow); }
+  50%       { box-shadow: 0 0 56px var(--c-accent-glow), 0 0 80px var(--c-accent-glow); }
+}
+
+/* fly-arc: particle từ form → hũ */
+@keyframes fly-arc {
+  0% {
+    opacity: 1;
+    transform: translate(0px, 0px) scale(1.1) rotate(0deg);
+  }
+  40% {
+    opacity: 1;
+    transform: translate(calc(var(--tx) * 0.5), calc(var(--ty) * 0.2 - 80px)) scale(0.9) rotate(90deg);
+  }
+  75% {
+    opacity: 0.7;
+    transform: translate(calc(var(--tx) * 0.85), calc(var(--ty) * 0.75)) scale(0.5) rotate(180deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) scale(0.1) rotate(260deg);
+  }
+}
+
+@keyframes jar-bounce {
+  0%   { transform: scale(1)    translateY(0);    }
+  25%  { transform: scale(1.14) translateY(-4px); }
+  50%  { transform: scale(0.93) translateY(2px);  }
+  70%  { transform: scale(1.06) translateY(-2px); }
+  100% { transform: scale(1)    translateY(0);    }
+}
+
+@keyframes count-pop {
+  0%   { transform: scale(1);   }
+  40%  { transform: scale(1.5); }
+  70%  { transform: scale(0.9); }
+  100% { transform: scale(1);   }
+}
+
+@keyframes expand-down {
+  from { opacity: 0; transform: scaleY(0.85) translateY(-8px); }
+  to   { opacity: 1; transform: scaleY(1)    translateY(0);    }
+}
+
+@keyframes delete-out {
+  0%   { opacity: 1; transform: translateX(0)   scale(1);    }
+  30%  {             transform: translateX(-6px) scale(1.01); }
+  60%  {             transform: translateX(14px) scale(0.97); }
+  100% { opacity: 0; transform: translateX(60px) scale(0.85); }
+}
+
+/* ── Animation classes ── */
+.animate-float       { animation: float        4s    ease-in-out                    infinite; }
+.animate-pulse-glow  { animation: pulse-glow   3s    ease-in-out                    infinite; }
+.animate-shake       { animation: jar-shake    0.7s  cubic-bezier(0.36,0.07,0.19,0.97) both; }
+.animate-reveal      { animation: reveal-up    0.4s  cubic-bezier(0.34,1.56,0.64,1)    both; }
+.animate-sparkle     { animation: sparkle      0.5s  cubic-bezier(0.34,1.56,0.64,1)    both; }
+.animate-slide-in    { animation: slide-in     0.3s  ease-out                           both; }
+.animate-fade-in     { animation: fade-in      0.2s  ease-out                           both; }
+.animate-btn-glow    { animation: btn-glow     0.7s  ease-in-out; }
+.animate-jar-bounce  { animation: jar-bounce   0.55s cubic-bezier(0.34,1.56,0.64,1)    both; }
+.animate-count-pop   { animation: count-pop    0.4s  cubic-bezier(0.34,1.56,0.64,1)    both; }
+.animate-expand-down { animation: expand-down  0.25s ease-out both; transform-origin: top; }
+.animate-delete-out  { animation: delete-out   0.35s ease-in  forwards; }
+
+/* ── Flying particle ── */
+.fly-particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  font-size: 1.6rem;
+  line-height: 1;
+  animation: fly-arc 0.6s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+}
+
+/* ── Shared input ── */
+.field-input {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 10px;
+  color: var(--c-text);
+  font-family: inherit;
+  font-size: 0.875rem;
+  padding: 11px 14px;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  color-scheme: dark;
+}
+.field-input::placeholder { color: rgba(255,255,255,0.2); }
+.field-input:focus {
+  border-color: var(--c-accent);
+  box-shadow: 0 0 0 3px var(--c-focus-ring);
+}
+.field-input.error {
+  border-color: var(--c-danger);
+  box-shadow: 0 0 0 3px var(--c-danger-ring);
+}

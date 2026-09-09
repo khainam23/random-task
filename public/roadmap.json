@@ -33,5 +33,19 @@
     "description": "Thư viện task mẫu theo danh mục (sức khỏe, học tập, sáng tạo,...). Lấy ngẫu nhiên từ một danh mục cụ thể.",
     "status": "planned",
     "icon": "📚"
+  },
+  {
+    "id": 6,
+    "title": "Send notification",
+    "description": "Thông báo task trên các nền tảng.",
+    "status": "planned",
+    "icon": "🔔"
+  },
+  {
+    "id": 7,
+    "title": "AI-powered task suggestions",
+    "description": "LLM tạo task ngẫu nhiên theo sở thích, thói quen, lịch sử đã làm.",
+    "status": "planned",
+    "icon": "🤖"
   }
 ]

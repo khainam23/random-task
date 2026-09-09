@@ -5,6 +5,7 @@ import TaskList from './components/TaskList';
 import RandomResult from './components/RandomResult';
 import { useTasks } from './hooks/useTasks';
 import Roadmap from './components/Roadmap';
+import Donate from './components/Donate';
 
 const REMOVE_KEY = 'random-task-jar-remove-after';
 function loadRemove() {
@@ -144,10 +145,11 @@ export default function App() {
           <TaskForm onAdd={handleAdd} jarRef={jarRef} />
           <TaskList tasks={tasks} onDelete={deleteTask} onEdit={editTask} />
           <Roadmap />
+          <Donate />
         </main>
 
         <footer className="text-center text-white/18 text-xs mt-10 pt-6 border-t border-white/[0.05]">
-          Made with ✨ — shake the jar, trust the jar.
+          Made with <a href="https://github.com/khainam23" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">khainam23</a> — shake the jar, trust the jar.
         </footer>
       </div>
 

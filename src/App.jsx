@@ -4,6 +4,7 @@ import TaskForm from './components/TaskForm';
 import TaskList from './components/TaskList';
 import RandomResult from './components/RandomResult';
 import { useTasks } from './hooks/useTasks';
+import Roadmap from './components/Roadmap';
 
 const REMOVE_KEY = 'random-task-jar-remove-after';
 function loadRemove() {
@@ -142,6 +143,7 @@ export default function App() {
         <main className="flex flex-col gap-5">
           <TaskForm onAdd={handleAdd} jarRef={jarRef} />
           <TaskList tasks={tasks} onDelete={deleteTask} onEdit={editTask} />
+          <Roadmap />
         </main>
 
         <footer className="text-center text-white/18 text-xs mt-10 pt-6 border-t border-white/[0.05]">

@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "title": "Cloud sync",
+    "description": "Lưu task lên cloud, đồng bộ được trên nhiều thiết bị / trình duyệt.",
+    "status": "planned",
+    "icon": "☁️"
+  },
+  {
+    "id": 2,
+    "title": "Task groups",
+    "description": "Tạo nhiều nhóm (group) riêng biệt, random trong từng nhóm độc lập nhau.",
+    "status": "planned",
+    "icon": "🗂️"
+  },
+  {
+    "id": 3,
+    "title": "Shared random",
+    "description": "Chia sẻ hũ với người khác, cùng nhau bấm random — phù hợp cho nhóm bạn hoặc team.",
+    "status": "planned",
+    "icon": "🤝"
+  },
+  {
+    "id": 4,
+    "title": "Task completion rating",
+    "description": "Đánh dấu task đã hoàn thành, chấm điểm mức độ hoàn thiện, xem lịch sử đã làm.",
+    "status": "planned",
+    "icon": "⭐"
+  },
+  {
+    "id": 5,
+    "title": "Task library",
+    "description": "Thư viện task mẫu theo danh mục (sức khỏe, học tập, sáng tạo,...). Lấy ngẫu nhiên từ một danh mục cụ thể.",
+    "status": "planned",
+    "icon": "📚"
+  }
+]

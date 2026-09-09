@@ -59,7 +59,7 @@ export default function TaskForm({ onAdd, jarRef }) {
         {err && <p className="text-red-400 text-xs pl-1">{err}</p>}
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 sm:flex-row flex-col">
         <div className="flex flex-col gap-1 flex-1">
           <label className="text-[11px] text-white/28 pl-1">Date (optional)</label>
           <input type="date" value={date} onChange={e => setDate(e.target.value)} className="field-input" />

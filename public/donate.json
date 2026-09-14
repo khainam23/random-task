@@ -1,16 +1,9 @@
 [
   {
     "id": 1,
-    "name": "MoMo",
-    "label": "Quét mã MoMo",
-    "image": "/qr/momo.jpg",
-    "accent": "#ae2070"
-  },
-  {
-    "id": 2,
-    "name": "VietQR",
+    "name": "Techcombank",
     "label": "Quét mã ngân hàng",
-    "image": "/qr/vietqr.jpg",
+    "image": "/qr/techcombank.png",
     "accent": "#1d4ed8"
   }
 ]

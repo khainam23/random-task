@@ -41,9 +41,60 @@ export default function Donate() {
   );
 }
 
+/* ── Lightbox ── */
+function Lightbox({ item, onClose }) {
+  // đóng khi bấm Escape
+  useEffect(() => {
+    const handler = e => e.key === 'Escape' && onClose();
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onClose]);
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ background: 'rgba(0,0,0,0.75)', backdropFilter: 'blur(6px)' }}
+      onClick={onClose}
+    >
+      <div
+        className="relative flex flex-col items-center gap-4 rounded-2xl p-5 max-w-sm w-full"
+        style={{ background: 'rgba(20,20,30,0.95)', border: '1px solid rgba(255,255,255,0.12)' }}
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Nút đóng */}
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 w-7 h-7 flex items-center justify-center rounded-full text-white/50 hover:text-white hover:bg-white/10 transition-colors text-sm"
+        >
+          ✕
+        </button>
+
+        {/* Tên */}
+        <p className="text-sm font-bold text-white/80">{item.name}</p>
+
+        {/* Ảnh QR phóng to */}
+        <img
+          src={item.image}
+          alt={`QR ${item.name}`}
+          className="w-full rounded-xl object-contain"
+          style={{ maxHeight: '70vw' }}
+        />
+
+        {item.label && (
+          <p className="text-xs text-white/40">{item.label}</p>
+        )}
+
+        <p className="text-[10px] text-white/25">Bấm ra ngoài hoặc nhấn Esc để đóng</p>
+      </div>
+    </div>
+  );
+}
+
+/* ── QR Card ── */
 function QRCard({ item }) {
   const [loaded, setLoaded] = useState(false);
   const [errored, setErrored] = useState(false);
+  const [open, setOpen] = useState(false);
 
   // accent color → rgba for glow
   const hex   = item.accent ?? '#3b82f6';
@@ -55,52 +106,65 @@ function QRCard({ item }) {
   const ring  = `rgba(${r},${g},${b},0.25)`;
 
   return (
-    <div
-      className="flex flex-col items-center gap-3 rounded-[14px] p-4 border transition-all duration-300 group hover:-translate-y-0.5"
-      style={{
-        background: faint,
-        borderColor: ring,
-        boxShadow: `0 0 0 0 ${glow}`,
-      }}
-      onMouseEnter={e => e.currentTarget.style.boxShadow = `0 4px 24px ${glow}`}
-      onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}
-    >
-      {/* QR image box */}
-      <div
-        className="relative w-full aspect-square rounded-[10px] overflow-hidden flex items-center justify-center"
-        style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${ring}` }}
-      >
-        {!errored ? (
-          <>
-            {/* Skeleton shimmer while loading */}
-            {!loaded && (
-              <div className="absolute inset-0 animate-pulse bg-white/[0.04]" />
-            )}
-            <img
-              src={item.image}
-              alt={`QR ${item.name}`}
-              className={`w-full h-full object-contain transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
-              onLoad={() => setLoaded(true)}
-              onError={() => setErrored(true)}
-            />
-          </>
-        ) : (
-          /* Placeholder khi chưa có ảnh */
-          <div className="flex flex-col items-center gap-2 p-4 text-center">
-            <span className="text-3xl opacity-30">🖼️</span>
-            <span className="text-[10px] text-white/25 leading-snug">
-              Đặt ảnh QR tại<br />
-              <code className="text-blue-400/50 font-mono">{item.image}</code>
-            </span>
-          </div>
-        )}
-      </div>
+    <>
+      {open && <Lightbox item={item} onClose={() => setOpen(false)} />}
 
-      {/* Label */}
-      <div className="text-center">
-        <p className="text-xs font-bold text-white/70">{item.name}</p>
-        <p className="text-[10px] text-white/30 mt-0.5">{item.label}</p>
+      <div
+        className="flex flex-col items-center gap-3 rounded-[14px] p-4 border transition-all duration-300 group hover:-translate-y-0.5"
+        style={{
+          background: faint,
+          borderColor: ring,
+          boxShadow: `0 0 0 0 ${glow}`,
+        }}
+        onMouseEnter={e => e.currentTarget.style.boxShadow = `0 4px 24px ${glow}`}
+        onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}
+      >
+        {/* QR image box */}
+        <div
+          className="relative w-full aspect-square rounded-[10px] overflow-hidden flex items-center justify-center cursor-zoom-in"
+          style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${ring}` }}
+          onClick={() => !errored && loaded && setOpen(true)}
+          title="Bấm để phóng to"
+        >
+          {!errored ? (
+            <>
+              {/* Skeleton shimmer while loading */}
+              {!loaded && (
+                <div className="absolute inset-0 animate-pulse bg-white/[0.04]" />
+              )}
+              <img
+                src={item.image}
+                alt={`QR ${item.name}`}
+                className={`w-full h-full object-contain transition-opacity duration-300 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => setLoaded(true)}
+                onError={() => setErrored(true)}
+              />
+              {/* Overlay hint khi hover */}
+              {loaded && (
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                  style={{ background: 'rgba(0,0,0,0.35)' }}>
+                  <span className="text-white text-xl">🔍</span>
+                </div>
+              )}
+            </>
+          ) : (
+            /* Placeholder khi chưa có ảnh */
+            <div className="flex flex-col items-center gap-2 p-4 text-center">
+              <span className="text-3xl opacity-30">🖼️</span>
+              <span className="text-[10px] text-white/25 leading-snug">
+                Đặt ảnh QR tại<br />
+                <code className="text-blue-400/50 font-mono">{item.image}</code>
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Label */}
+        <div className="text-center">
+          <p className="text-xs font-bold text-white/70">{item.name}</p>
+          <p className="text-[10px] text-white/30 mt-0.5">{item.label}</p>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
